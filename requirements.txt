@@ -1,0 +1,4 @@
+eve
+dnspython
+flask-cors
+gunicorn
