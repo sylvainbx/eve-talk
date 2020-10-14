@@ -7,7 +7,7 @@ python run.py
 ## CURL commands
 - get all books
 ```bash
-curl -XGET http://localhost:5000/books
+curl -XGET http://localhost:5000/books | jq
 ```
 
 - create new book
@@ -38,6 +38,20 @@ curl  -XPOST http://localhost:5000/libraries \
 
 - get all libraries
 ```bash
-curl -XGET http://localhost:5000/libraries
+curl -XGET http://localhost:5000/libraries | jq
 ```
 
+- edit book to assign library
+```bash
+curl -XPATCH http://localhost:5000/books/5f86a3820e62ccdd4282ffe0 \ # GET /books
+  --header 'content-type: application/json' \
+  --header 'If-Match: b9d61937209e065890d1c7326680149c89d1ddd2' \   # GET /books/:id
+  --data '{"library": "5f86a7e60e62ccdd4282ffe2"}'                  # GET /libraries
+```
+
+- get books in libraries near coordinates
+```bash
+# aggregate={"$center": [45.187855, 5.717826], "$distance": 1500}
+curl -XGET http://localhost:5000/books-around?aggregate=%7B%22%24center%22%3A%20%5B45.187855%2C%205.717826%5D%2C%20%22%24distance%22%3A%201500%7D'
+```
+ 
